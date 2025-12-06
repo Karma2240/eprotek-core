@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Copyright (c) 2014-2026 Franco Fichtner <franco@opnsense.org>
+=======
+#  Copyright (C) 2025-2026 Viren Shah.
+>>>>>>> 6b272136c (Apply branding changes)
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -27,7 +31,6 @@ all:
 	@cat ${.CURDIR}/README.md | ${PAGER}
 
 .include "Mk/version.mk"
-
 .include "Mk/defaults.mk"
 .include "Mk/common.mk"
 .include "Mk/git.mk"
@@ -112,9 +115,9 @@ CORE_PKGVERSION=	${CORE_VERSION}
 CORE_PYTHON_DOT=	${CORE_PYTHON:C/./&./1}
 
 CORE_COMMENT?=		${CORE_PRODUCT} ${CORE_TYPE} release
-<<<<<<< HEAD
-CORE_MAINTAINER?=	project@opnsense.org
+CORE_MAINTAINER?=	support@eprotek.org
 CORE_ORIGIN?=		opnsense/${CORE_NAME}
+<<<<<<< HEAD
 CORE_PACKAGESITE?=	https://pkg.opnsense.org
 CORE_PRODUCT?=		OPNsense
 CORE_WWW?=		https://opnsense.org/
@@ -126,20 +129,22 @@ CORE_PRODUCT =		eProtek
 CORE_REPOSITORY =	${CORE_ABI}/latest
 CORE_WWW =		https://eProtek.org/
 >>>>>>> 9c776380f (final changes)
+=======
+CORE_PACKAGESITE?=	https://pkg.eprotek.org
+CORE_PRODUCT?=		eProtek
+CORE_REPOSITORY?=	${CORE_ABI}/latest
+CORE_WWW?=		https://eProtek.org/
+>>>>>>> 6b272136c (Apply branding changes)
 CORE_USER?=		wwwonly
 CORE_UID?=		789
 CORE_GROUP?=		${CORE_USER}
 CORE_GID?=		${CORE_UID}
-<<<<<<< HEAD
-=======
-CORE_VERSION =          1.0.0
-CORE_PKGVERSION =       1.0.0
-CORE_NICKNAME =         MVP
-CORE_COPYRIGHT_HOLDER =	Viren Shah.
-CORE_COPYRIGHT_WWW =	https://www.virenshah.com/
-CORE_COPYRIGHT_YEARS =	2025-2026
->>>>>>> 9c776380f (final changes)
-
+CORE_NICKNAME?=         MVP
+CORE_COPYRIGHT_HOLDER?=	Viren Shah.
+CORE_COPYRIGHT_WWW?=	https://www.virenshah.com/
+CORE_COPYRIGHT_YEARS?=	2025-2026
+CORE_DISPLAY_VERSION?=  1.0.0
+CORE_DISPLAY_NICKNAME?= MVP 
 CORE_DEPENDS_aarch64?=	py${CORE_PYTHON}-duckdb \
 			py${CORE_PYTHON}-numpy \
 			py${CORE_PYTHON}-pandas \
@@ -159,7 +164,6 @@ CORE_DEPENDS?=		ca_root_nss \
 			flock \
 			flowd \
 			hostapd \
-			hostwatch \
 			ifinfo \
 			iftop \
 			kea \
@@ -378,8 +382,20 @@ migrate:
 validate:
 	@${PLUGINCTL} -v
 
+# XXX we should stop treating AclConfig dir as the test's actual /conf dir
+TEST_NO_CLOBBER=	${TESTDIR}/app/models/OPNsense/ACL/AclConfig/config.xml
+
 test:
-	@cd ${TESTDIR} && phpunit || true; rm -rf ${TESTDIR}/.phpunit.result.cache
+.if exists(${TESTDIR})
+	@if [ "$$(${VERSIONBIN} -v)" != "${CORE_PKGVERSION}" ]; then \
+		echo "Installed version does not match, expected ${CORE_PKGVERSION}"; \
+		exit 1; \
+	fi
+	@cd ${TESTDIR} && cp ${TEST_NO_CLOBBER} ${TEST_NO_CLOBBER}.save && \
+	    phpunit || true; rm -rf ${TESTDIR}/.phpunit.result.cache \
+	    ${TESTDIR}/app/models/OPNsense/ACL/AclConfig/backup; \
+	    mv ${TEST_NO_CLOBBER}.save ${TEST_NO_CLOBBER}
+.endif
 
 clean: clean-pkgdir clean-wrksrc clean-mfcdir checkout
 
