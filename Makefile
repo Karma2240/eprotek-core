@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Copyright (c) 2014-2026 Franco Fichtner <franco@opnsense.org>
-=======
 #  Copyright (C) 2025-2026 Viren Shah.
->>>>>>> 6b272136c (Apply branding changes)
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -115,26 +111,12 @@ CORE_PKGVERSION=	${CORE_VERSION}
 CORE_PYTHON_DOT=	${CORE_PYTHON:C/./&./1}
 
 CORE_COMMENT?=		${CORE_PRODUCT} ${CORE_TYPE} release
-CORE_MAINTAINER?=	support@eprotek.org
-CORE_ORIGIN?=		opnsense/${CORE_NAME}
-<<<<<<< HEAD
-CORE_PACKAGESITE?=	https://pkg.opnsense.org
-CORE_PRODUCT?=		OPNsense
-CORE_WWW?=		https://opnsense.org/
-=======
 CORE_MAINTAINER =	support@eprotek.org
 CORE_ORIGIN =		eprotek/${CORE_NAME}
 CORE_PACKAGESITE =	https://pkg.eprotek.org
 CORE_PRODUCT =		eProtek
 CORE_REPOSITORY =	${CORE_ABI}/latest
 CORE_WWW =		https://eProtek.org/
->>>>>>> 9c776380f (final changes)
-=======
-CORE_PACKAGESITE?=	https://pkg.eprotek.org
-CORE_PRODUCT?=		eProtek
-CORE_REPOSITORY?=	${CORE_ABI}/latest
-CORE_WWW?=		https://eProtek.org/
->>>>>>> 6b272136c (Apply branding changes)
 CORE_USER?=		wwwonly
 CORE_UID?=		789
 CORE_GROUP?=		${CORE_USER}
